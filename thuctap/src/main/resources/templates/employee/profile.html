@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - HR Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
@@ -230,7 +230,6 @@
             transform: scale(1.1);
         }
         
-        /* Animation for cards */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -254,7 +253,6 @@
             animation-delay: 0.2s;
         }
         
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -280,15 +278,15 @@
 </head>
 <body>
     <header class="navbar navbar-light sticky-top bg-white flex-md-nowrap p-0 shadow-sm">
+        <button class="navbar-toggler d-md-none collapsed me-2" type="button" id="sidebarToggle" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
             <i class="bi bi-building me-2"></i>HR Management
         </a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-nav">
+        <div class="navbar-nav ms-auto">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3 text-dark" href="/logout">
+                <a class="nav-link px-3 text-dark" style="margin-right: 5px;" href="/logout">
                     <i class="bi bi-box-arrow-right me-1"></i>Sign out
                 </a>
             </div>
@@ -338,7 +336,7 @@
                             <div class="col-md-10">
                                 <h3 th:text="${employee.fullName}">Employee Name</h3>
                                 <p class="text-muted" th:text="${employee.position != null ? employee.position.name : 'No Position'}">Position</p>
-                                <p><i class="bi bi-envelope"></i> <span th:text="${employee.email}"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9efbf3fff7f2defbe6fff3eef2fbb0fdf1f3">[email&#160;protected]</a></span></p>
+                                <p><i class="bi bi-envelope"></i> <span th:text="${employee.email}">[email&#160;protected]</span></p>
                                 <p><i class="bi bi-telephone"></i> <span th:text="${employee.phone}">123-456-7890</span></p>
                             </div>
                         </div>
@@ -376,7 +374,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>Email:</th>
-                                                    <td th:text="${employee.email}"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a1f171b13163a1f021b170a161f54191517">[email&#160;protected]</a></td>
+                                                    <td th:text="${employee.email}">[email&#160;protected]</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Phone:</th>
@@ -502,27 +500,32 @@
         </div>
     </div>
     
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Handle mobile sidebar toggle
-            const navbarToggler = document.querySelector('.navbar-toggler');
-            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebarMenu');
             
-            if (navbarToggler) {
-                navbarToggler.addEventListener('click', function() {
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
                     sidebar.classList.toggle('show');
                 });
             }
             
-            // Add animation to tab content when switching tabs
+            const navLinks = sidebar.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('show');
+                    }
+                });
+            });
+            
             const tabButtons = document.querySelectorAll('.nav-tabs .nav-link');
             tabButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const tabId = this.getAttribute('data-bs-target');
                     const tabContent = document.querySelector(tabId);
-                    
                     if (tabContent) {
                         tabContent.classList.add('animate-fadeInUp');
                         setTimeout(() => {
@@ -535,4 +538,3 @@
     </script>
 </body>
 </html>
-
