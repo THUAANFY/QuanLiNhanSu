@@ -40,4 +40,9 @@ public class Employee {
     private List<Reward> rewards;
     
     private boolean isAdmin;
+
+    @Override
+    public String toString() {
+        return "Employee{id=" + id + ", fullName='" + fullName + "'}";
+    }
 }

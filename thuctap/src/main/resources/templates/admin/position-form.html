@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Form - HR Management System</title>
+    <title th:text="${position.id == null ? 'Add New Position' : 'Edit Position'}">Position Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
@@ -122,28 +122,6 @@
             box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
         }
         
-        .form-select {
-            border-radius: 8px;
-            border: 1px solid rgba(222, 226, 230, 0.8);
-            padding: 10px 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            font-weight: 500;
-            color: var(--dark-color);
-            margin-bottom: 8px;
-        }
-        
         .btn {
             border-radius: 8px;
             padding: 8px 16px;
@@ -188,7 +166,22 @@
             border-color: #6c757d;
         }
         
-        /* Animation for cards */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+        }
+        
+        .input-group-text {
+            background-color: #f8f9fa;
+            border: 1px solid rgba(222, 226, 230, 0.8);
+            border-radius: 8px 0 0 8px;
+        }
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -204,13 +197,6 @@
             animation: fadeInUp 0.5s ease forwards;
         }
         
-        .input-group-text {
-            background-color: #f8f9fa;
-            border: 1px solid rgba(222, 226, 230, 0.8);
-            border-radius: 8px 0 0 8px;
-        }
-        
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -254,12 +240,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/admin/employees">
+                            <a class="nav-link" href="/admin/employees">
                                 <i class="bi bi-people"></i> Employees
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/positions">
+                            <a class="nav-link active" href="/admin/positions">
                                 <i class="bi bi-briefcase"></i> Positions
                             </a>
                         </li>
@@ -295,102 +281,38 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">
-                        <i class="bi bi-person-plus-fill me-2"></i>
-                        <span th:text="${employee.id == null ? 'Add New Employee' : 'Edit Employee'}">Employee Form</span>
+                        <i class="bi bi-briefcase-fill me-2"></i>
+                        <span th:text="${position.id == null ? 'Add New Position' : 'Edit Position'}">Position Form</span>
                     </h1>
                 </div>
                 
                 <div class="card animate-fadeInUp">
                     <div class="card-body">
-                        <form th:action="@{/admin/employees/save}" method="post" th:object="${employee}">
+                        <form th:action="@{/admin/positions/save}" method="post" th:object="${position}">
                             <input type="hidden" th:field="*{id}">
                             
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="fullName" class="form-label">Full Name</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                            <input type="text" class="form-control" id="fullName" th:field="*{fullName}" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="email" class="form-label">Email</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                            <input type="email" class="form-control" id="email" th:field="*{email}" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="password" class="form-label">Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                            <input type="text" class="form-control" id="password" th:field="*{password}" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="phone" class="form-label">Phone</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                            <input type="text" class="form-control" id="phone" th:field="*{phone}">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="address" class="form-label">Address</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                                            <textarea class="form-control" id="address" rows="3" th:field="*{address}"></textarea>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="dateOfBirth" class="form-label">Date of Birth</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
-                                            <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="hireDate" class="form-label">Hire Date</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
-                                            <input type="date" class="form-control" id="hireDate" th:field="*{hireDate}">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="position" class="form-label">Position</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
-                                            <select class="form-select" id="position" th:field="*{position.id}">
-                                                <option value="">-- Select Position --</option>
-                                                <option th:each="pos : ${positions}" th:value="${pos.id}" th:text="${pos.name}">Position</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                            <div class="form-group">
+                                <label for="name" class="form-label">Position Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                                    <input type="text" class="form-control" id="name" th:field="*{name}" required>
                                 </div>
                             </div>
                             
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="isAdmin" th:field="*{admin}">
-                                <label class="form-check-label" for="isAdmin">
-                                    Admin Access
-                                </label>
+                            <div class="form-group">
+                                <label for="description" class="form-label">Description</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-text-paragraph"></i></span>
+                                    <textarea class="form-control" id="description" rows="3" th:field="*{description}"></textarea>
+                                </div>
                             </div>
                             
                             <div class="d-flex justify-content-between">
-                                <a href="/admin/employees" class="btn btn-secondary">
+                                <a href="/admin/positions" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left me-2"></i>Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save me-2"></i>Save Employee
+                                    <i class="bi bi-save me-2"></i>Save Position
                                 </button>
                             </div>
                         </form>
@@ -403,7 +325,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Handle mobile sidebar toggle
             const navbarToggler = document.querySelector('.navbar-toggler');
             const sidebar = document.querySelector('.sidebar');
             
@@ -413,7 +334,6 @@
                 });
             }
             
-            // Add animation to form elements
             const formGroups = document.querySelectorAll('.form-group');
             formGroups.forEach((group, index) => {
                 group.classList.add('animate-fadeInUp');

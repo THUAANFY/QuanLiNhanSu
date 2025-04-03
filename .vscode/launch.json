@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ThuctapApplication<thuctap>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "manage.thuctap.ThuctapApplication",
+            "projectName": "thuctap",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

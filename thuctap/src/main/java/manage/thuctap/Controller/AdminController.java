@@ -108,6 +108,8 @@ public class AdminController {
             model.addAttribute("positions", positions);
             model.addAttribute("employee", employee.get());
             model.addAttribute("admin", admin);
+
+            System.out.println("Password: " + employee.get().getPassword());
             return "admin/employee-form";
         }
         

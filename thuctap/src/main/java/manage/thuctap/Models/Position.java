@@ -23,4 +23,9 @@ public class Position {
     
     @OneToMany(mappedBy = "position")
     private List<Employee> employees;
+
+    @Override
+    public String toString() {
+        return "Position{id=" + id + ", name='" + name + "'}";
+    }
 }
