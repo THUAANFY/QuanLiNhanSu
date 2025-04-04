@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Schedule Form - HR Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #1f2a44;
+            overflow-x: hidden;
+            margin: 0;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 60px 0 0;
+            width: 220px;
+            background: linear-gradient(180deg, #1f2a44, #0f172a);
+            box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .sidebar-sticky {
+            height: calc(100vh - 60px);
+            padding-top: 1.5rem;
+        }
+        .nav-link {
+            color: #b0b7c3;
+            font-weight: 500;
+            padding: 12px 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .nav-link.active {
+            color: #fff;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+        .nav-link i {
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+        .navbar {
+            background: #fff;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+            padding: 15px 25px;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 101;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: #1f2a44;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            margin-left: 15px;
+        }
+        .navbar-toggler {
+            display: none; /* Ẩn mặc định ở màn hình lớn */
+            z-index: 102;
+        }
+        .navbar-nav {
+            margin-left: auto;
+            margin-right: 15px;
+        }
+        main {
+            padding-top: 80px;
+            padding-left: 240px;
+            transition: padding-left 0.3s ease;
+        }
+        .card {
+            border: none;
+            border-radius: 20px;
+            background: #fff;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+            animation: floatIn 0.7s ease-out;
+            overflow: hidden;
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+            transform: scale(1.01);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #1f2a44;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .custom-checkbox {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 25px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .custom-checkbox input {
+            display: none;
+        }
+        .custom-checkbox label {
+            padding-left: 38px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #4b5563;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .custom-checkbox label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .custom-checkbox input:checked + label:before {
+            background: #6366f1;
+            border-color: #6366f1;
+            animation: checkPulse 0.4s ease;
+        }
+        .custom-checkbox input:checked + label:after {
+            content: '\2713';
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .custom-checkbox:hover label {
+            color: #6366f1;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
+        }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #1f2a44;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+        }
+        /* Responsive */
+        @media (max-width: 767.98px) {
+            .sidebar {
+                width: 220px;
+                transform: translateX(-100%);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            main {
+                padding-left: 0;
+            }
+            .navbar {
+                justify-content: flex-end; /* Đẩy "HR Management" sang phải */
+            }
+            .navbar-brand {
+                margin-left: 0;
+                margin-right: 15px;
+                order: 2; /* Đặt "HR Management" sau hamburger */
+            }
+            .navbar-toggler {
+                display: inline-block; /* Hiện hamburger ở màn hình nhỏ */
+                order: 1; /* Đặt hamburger trước "HR Management" */
+                margin-left: 15px;
+            }
+            .navbar-nav {
+                order: 3; /* Đặt "Sign out" cuối cùng */
+            }
+        }
+        /* Animations */
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes checkPulse {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.1); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+
+        .navbar-toggler {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
+        <button class="navbar-toggler d-md-none collapsed" type="button" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">HR Management</a>
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="/logout">Sign out</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link" href="/admin/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/employees"><i class="bi bi-people"></i> Employees</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/positions"><i class="bi bi-briefcase"></i> Positions</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/admin/schedules"><i class="bi bi-calendar3"></i> Work Schedules</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/attendances"><i class="bi bi-calendar-check"></i> Attendances</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/salaries"><i class="bi bi-cash"></i> Salaries</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/rewards"><i class="bi bi-trophy"></i> Rewards</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/statistics"><i class="bi bi-bar-chart"></i> Statistics</a></li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-2">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2" th:text="${schedule.id == null ? 'Add New Work Schedule' : 'Edit Work Schedule'}">Work Schedule Form</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="/admin/schedules" class="btn btn-sm btn-secondary"><i class="bi bi-arrow-left"></i> Back to Schedules</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body p-4">
+                        <form th:action="@{/admin/schedules/save}" th:object="${schedule}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="name" class="form-label">Schedule Name</label>
+                                    <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="startTime" class="form-label">Start Time</label>
+                                    <input type="time" class="form-control" id="startTime" th:field="*{startTime}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="endTime" class="form-label">End Time</label>
+                                    <input type="time" class="form-control" id="endTime" th:field="*{endTime}" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label class="form-label">Working Days</label>
+                                    <div class="d-flex flex-wrap">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="monday" name="workingDaysArray" value="1">
+                                            <label for="monday">Monday</label>
+                                        </div>
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="tuesday" name="workingDaysArray" value="2">
+                                            <label for="tuesday">Tuesday</label>
+                                        </div>
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="wednesday" name="workingDaysArray" value="4">
+                                            <label for="wednesday">Wednesday</label>
+                                        </div>
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="thursday" name="workingDaysArray" value="8">
+                                            <label for="thursday">Thursday</label>
+                                        </div>
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="friday" name="workingDaysArray" value="16">
+                                            <label for="friday">Friday</label>
+                                        </div>
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="saturday" name="workingDaysArray" value="32">
+                                            <label for="saturday">Saturday</label>
+                                        </div>
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="sunday" name="workingDaysArray" value="64">
+                                            <label for="sunday">Sunday</label>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" th:field="*{workingDays}" id="workingDaysHidden">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary" onclick="calculateWorkingDays()">
+                                        <i class="bi bi-save"></i> Save Schedule
+                                    </button>
+                                    <a href="/admin/schedules" class="btn btn-secondary">
+                                        <i class="bi bi-x"></i> Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function calculateWorkingDays() {
+            const checkboxes = document.querySelectorAll('input[name="workingDaysArray"]:checked');
+            let workingDays = 0;
+            checkboxes.forEach(checkbox => {
+                workingDays += parseInt(checkbox.value);
+            });
+            document.getElementById('workingDaysHidden').value = workingDays;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const workingDaysValue = parseInt(document.getElementById('workingDaysHidden').value || 0);
+            if (workingDaysValue & 1) document.getElementById('monday').checked = true;
+            if (workingDaysValue & 2) document.getElementById('tuesday').checked = true;
+            if (workingDaysValue & 4) document.getElementById('wednesday').checked = true;
+            if (workingDaysValue & 8) document.getElementById('thursday').checked = true;
+            if (workingDaysValue & 16) document.getElementById('friday').checked = true;
+            if (workingDaysValue & 32) document.getElementById('saturday').checked = true;
+            if (workingDaysValue & 64) document.getElementById('sunday').checked = true;
+
+            const toggler = document.querySelector('.navbar-toggler');
+            const sidebar = document.querySelector('#sidebarMenu');
+
+            toggler.addEventListener('click', function(e) {
+                e.preventDefault();
+                sidebar.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+</html>

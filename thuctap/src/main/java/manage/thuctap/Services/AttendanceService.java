@@ -35,20 +35,19 @@ public class AttendanceService {
     
     public Attendance checkIn(Employee employee, WorkSchedule workSchedule) {
         LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
+        // Set fixed check-in time to 08:30 instead of 09:00
+        LocalTime fixedCheckInTime = LocalTime.of(8, 30);
         
         Optional<Attendance> existingAttendance = getAttendanceByEmployeeAndDate(employee, today);
         
         if (existingAttendance.isPresent()) {
-            // Attendance attendance = existingAttendance.get();
-            // Only update check-in if it  {
             Attendance attendance = existingAttendance.get();
             // Only update check-in if it hasn't been set yet
             if (attendance.getCheckIn() == null) {
-                attendance.setCheckIn(now);
+                attendance.setCheckIn(fixedCheckInTime);
                 
                 // Determine status based on check-in time
-                if (now.isAfter(workSchedule.getStartTime())) {
+                if (fixedCheckInTime.isAfter(workSchedule.getStartTime())) {
                     attendance.setStatus("LATE");
                 } else {
                     attendance.setStatus("PRESENT");
@@ -62,11 +61,11 @@ public class AttendanceService {
         Attendance attendance = new Attendance();
         attendance.setEmployee(employee);
         attendance.setDate(today);
-        attendance.setCheckIn(now);
+        attendance.setCheckIn(fixedCheckInTime);
         attendance.setWorkSchedule(workSchedule);
         
         // Determine status based on check-in time
-        if (now.isAfter(workSchedule.getStartTime())) {
+        if (fixedCheckInTime.isAfter(workSchedule.getStartTime())) {
             attendance.setStatus("LATE");
         } else {
             attendance.setStatus("PRESENT");

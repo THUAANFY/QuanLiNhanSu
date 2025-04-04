@@ -1,7 +1,7 @@
 package manage.thuctap.Controller;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+// import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,21 +108,9 @@ public class EmployeeController {
             return "redirect:/login";
         }
         
-        // Get default work schedule (in a real app, this would be assigned to the employee)
-        List<WorkSchedule> schedules = workScheduleService.getAllWorkSchedules();
-        if (!schedules.isEmpty()) {
-            attendanceService.checkIn(employee, schedules.get(0));
-        } else {
-            // Create a default work schedule if none exists
-            WorkSchedule defaultSchedule = new WorkSchedule();
-            defaultSchedule.setName("Default Schedule");
-            defaultSchedule.setStartTime(LocalTime.of(8, 0)); // 8:00 AM
-            defaultSchedule.setEndTime(LocalTime.of(17, 0));  // 5:00 PM
-            defaultSchedule.setWorkingDays(31);  // Monday to Friday (11111)
-            WorkSchedule savedSchedule = workScheduleService.saveWorkSchedule(defaultSchedule);
-            
-            attendanceService.checkIn(employee, savedSchedule);
-        }
+        // Get or create default work schedule with start time at 09:00
+        WorkSchedule workSchedule = workScheduleService.getOrCreateDefaultWorkSchedule();
+        attendanceService.checkIn(employee, workSchedule);
         
         return "redirect:/employee/dashboard";
     }

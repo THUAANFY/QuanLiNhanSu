@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards - HR Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 48px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background-color: #343a40;
+        }
+        .sidebar-sticky {
+            position: relative;
+            top: 0;
+            height: calc(100vh - 48px);
+            padding-top: .5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .nav-link {
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 20px;
+        }
+        .nav-link:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-link.active {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .nav-link i {
+            margin-right: 10px;
+        }
+        main {
+            padding-top: 48px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .action-buttons a {
+            margin-right: 5px;
+        }
+        .reward-type {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        .reward-positive {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+        .reward-negative {
+            background-color: #f8d7da;
+            color: #842029;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">HR Management</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="/logout">Sign out</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/dashboard">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/employees">
+                                <i class="bi bi-people"></i> Employees
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/positions">
+                                <i class="bi bi-briefcase"></i> Positions
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/schedules">
+                                <i class="bi bi-calendar3"></i> Work Schedules
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/attendances">
+                                <i class="bi bi-calendar-check"></i> Attendances
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/salaries">
+                                <i class="bi bi-cash"></i> Salaries
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admin/rewards">
+                                <i class="bi bi-trophy"></i> Rewards
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/statistics">
+                                <i class="bi bi-bar-chart"></i> Statistics
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Rewards & Discipline</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="/admin/rewards/add" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-plus"></i> Add New Reward/Discipline
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Filter Records</h5>
+                        <form class="row g-3" method="get" action="/admin/rewards">
+                            <div class="col-md-4">
+                                <label for="employeeFilter" class="form-label">Employee</label>
+                                <select class="form-select" id="employeeFilter" name="employeeId">
+                                    <option value="">All Employees</option>
+                                    <option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.fullName}" 
+                                            th:selected="${param.employeeId != null && param.employeeId[0] == emp.id.toString()}">
+                                        Employee Name
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="typeFilter" class="form-label">Type</label>
+                                <select class="form-select" id="typeFilter" name="type">
+                                    <option value="">All Types</option>
+                                    <option value="REWARD" th:selected="${param.type != null && param.type[0] == 'REWARD'}">Reward</option>
+                                    <option value="DISCIPLINE" th:selected="${param.type != null && param.type[0] == 'DISCIPLINE'}">Discipline</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-search"></i> Filter
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee</th>
+                                        <th>Type</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="reward : ${rewards}">
+                                        <td th:text="${reward.id}">1</td>
+                                        <td th:text="${reward.employee.fullName}">John Doe</td>
+                                        <td>
+                                            <span th:if="${reward.type == 'REWARD'}" class="reward-type reward-positive">Reward</span>
+                                            <span th:if="${reward.type == 'DISCIPLINE'}" class="reward-type reward-negative">Discipline</span>
+                                        </td>
+                                        <td th:text="${reward.title}">Performance Bonus</td>
+                                        <td th:text="${#temporals.format(reward.date, 'dd-MM-yyyy')}">01-01-2023</td>
+                                        <td th:text="${reward.amount}">500</td>
+                                        <td th:text="${reward.description}">Excellent performance</td>
+                                        <td class="action-buttons">
+                                            <a th:href="@{/admin/rewards/edit/{id}(id=${reward.id})}" class="btn btn-sm btn-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a th:href="@{/admin/rewards/delete/{id}(id=${reward.id})}" class="btn btn-sm btn-danger" 
+                                               onclick="return confirm('Are you sure you want to delete this record?')">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${rewards.empty}">
+                                        <td colspan="8" class="text-center">No records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employees - HR Management System</title>
+    <title>Work Schedules - HR Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
@@ -72,7 +72,7 @@
             margin-left: 15px;
         }
         .navbar-toggler {
-            display: none;
+            display: none; /* Ẩn mặc định ở màn hình lớn */
             z-index: 102;
         }
         .navbar-nav {
@@ -92,23 +92,24 @@
             animation: floatIn 0.7s ease-out;
             overflow: hidden;
         }
-        .form-control {
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            padding: 12px;
+        .table {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 0;
             font-size: 0.9rem;
+        }
+        .table thead {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .table tbody tr {
             transition: all 0.3s ease;
         }
-        .form-control:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
-            transform: scale(1.01);
-        }
-        .form-label {
-            font-weight: 600;
-            color: #1f2a44;
-            margin-bottom: 8px;
-            font-size: 1rem;
+        .table tbody tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
         }
         .action-buttons .btn {
             width: 45px;
@@ -139,31 +140,7 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(239, 68, 68, 0.5);
         }
-        .table {
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-        .table th {
-            font-weight: 600;
-            color: #1f2a44;
-            border-bottom: 2px solid #e5e7eb;
-            padding: 12px 16px;
-        }
-        .table td {
-            padding: 12px 16px;
-            vertical-align: middle;
-            border-bottom: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-        .table tr:hover td {
-            background-color: rgba(99, 102, 241, 0.05);
-        }
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-        
-        /* Custom Alert Styles từ schedules.html */
+        /* Custom Alert */
         .custom-alert {
             position: fixed;
             top: 50%;
@@ -241,7 +218,6 @@
         .overlay.show {
             display: block;
         }
-        
         /* Responsive */
         @media (max-width: 767.98px) {
             .sidebar {
@@ -255,28 +231,22 @@
                 padding-left: 0;
             }
             .navbar {
-                justify-content: flex-end;
+                justify-content: flex-end; /* Đẩy "HR Management" sang phải */
             }
             .navbar-brand {
                 margin-left: 0;
                 margin-right: 15px;
-                order: 2;
+                order: 2; /* Đặt "HR Management" sau hamburger */
             }
             .navbar-toggler {
-                display: inline-block;
-                order: 1;
+                display: inline-block; /* Hiện hamburger ở màn hình nhỏ */
+                order: 1; /* Đặt hamburger trước "HR Management" */
                 margin-left: 15px;
             }
             .navbar-nav {
-                order: 3;
-            }
-            .custom-alert-container {
-                width: 300px;
-                right: 10px;
-                top: 10px;
+                order: 3; /* Đặt "Sign out" cuối cùng */
             }
         }
-        
         /* Animations */
         @keyframes floatIn {
             from { opacity: 0; transform: translateY(30px); }
@@ -286,7 +256,6 @@
             from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
             to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
-
         .navbar-toggler {
             border: none !important;
             outline: none !important;
@@ -306,18 +275,16 @@
             </div>
         </div>
     </header>
-
-    <div class="custom-alert-container" id="alertContainer"></div>
-
+    
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item"><a class="nav-link" href="/admin/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/admin/employees"><i class="bi bi-people"></i> Employees</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/admin/employees"><i class="bi bi-people"></i> Employees</a></li>
                         <li class="nav-item"><a class="nav-link" href="/admin/positions"><i class="bi bi-briefcase"></i> Positions</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/admin/schedules"><i class="bi bi-calendar3"></i> Work Schedules</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/admin/schedules"><i class="bi bi-calendar3"></i> Work Schedules</a></li>
                         <li class="nav-item"><a class="nav-link" href="/admin/attendances"><i class="bi bi-calendar-check"></i> Attendances</a></li>
                         <li class="nav-item"><a class="nav-link" href="/admin/salaries"><i class="bi bi-cash"></i> Salaries</a></li>
                         <li class="nav-item"><a class="nav-link" href="/admin/rewards"><i class="bi bi-trophy"></i> Rewards</a></li>
@@ -328,48 +295,48 @@
             
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-2">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Employees</h1>
+                    <h1 class="h2">Work Schedules</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <a href="/admin/employees/add" class="btn btn-primary">
-                            <i class="bi bi-person-plus"></i> Add New Employee
-                        </a>
+                        <a href="/admin/schedules/add" class="btn btn-sm btn-primary"><i class="bi bi-plus"></i> Add New Schedule</a>
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-body p-4">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr class="text-center">
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Position</th>
-                                        <th>Hire Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Working Days</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="employee : ${employees}" class="text-center align-middle">
-                                        <td th:text="${employee.id}">1</td>
-                                        <td th:text="${employee.fullName}">John Doe</td>
-                                        <td th:text="${employee.email}"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="314b5e595f71445b4042555e551f525e5c">[email&#160;protected]</a></td>
-                                        <td th:text="${employee.phone}">123-456-7890</td>
-                                        <td th:text="${employee.position != null ? employee.position.name : 'Not Assigned'}">Staff</td>
-                                        <td th:text="${employee.hireDate != null ? #temporals.format(employee.hireDate, 'dd-MM-yyyy') : 'N/A'}">01-01-2023</td>
+                                    <tr th:each="schedule : ${schedules}" class="text-center align-middle">
+                                        <td th:text="${schedule.id}">1</td>
+                                        <td th:text="${schedule.name}">Standard Schedule</td>
+                                        <td th:text="${schedule.startTime}">08:30</td>
+                                        <td th:text="${schedule.endTime}">17:00</td>
                                         <td>
-                                            <div class="action-buttons">
-                                                <a th:href="@{/admin/employees/edit/{id}(id=${employee.id})}" class="btn btn-sm btn-primary">
-                                                    <i class="bi bi-pencil"></i>
-                                                </a>
-                                                <a th:href="@{/admin/employees/delete/{id}(id=${employee.id})}" class="btn btn-sm btn-danger" 
-                                                   onclick="showConfirmDelete(this.href, event)">
-                                                    <i class="bi bi-trash"></i>
-                                                </a>
-                                            </div>
+                                            <span th:if="${schedule.workingDays == 31}">Monday to Friday</span>
+                                            <span th:if="${schedule.workingDays == 127}">All Week</span>
+                                            <span th:if="${schedule.workingDays != 31 && schedule.workingDays != 127}" th:text="${schedule.workingDays}">Custom</span>
                                         </td>
+                                        <td class="action-buttons">
+                                            <a th:href="@{/admin/schedules/edit/{id}(id=${schedule.id})}" class="btn btn-sm btn-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a th:href="@{/admin/schedules/delete/{id}(id=${schedule.id})}" class="btn btn-sm btn-danger" onclick="showConfirmDelete(this.href, event)">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${schedules.empty}">
+                                        <td colspan="6" class="text-center">No schedules found</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -380,17 +347,69 @@
         </div>
     </div>
 
-    <!-- Custom Alert và Overlay -->
+    <!-- Custom Alert -->
     <div id="customAlert" class="custom-alert">
         <span class="icon"></span>
         <span class="message"></span>
         <div class="buttons"></div>
     </div>
     <div id="overlay" class="overlay"></div>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function showAlert(message, type, callback) {
+            const alertBox = document.getElementById('customAlert');
+            const overlay = document.getElementById('overlay');
+            const icon = alertBox.querySelector('.icon');
+            const msg = alertBox.querySelector('.message');
+            const buttons = alertBox.querySelector('.buttons');
+            
+            msg.textContent = message;
+            alertBox.className = `custom-alert ${type}`;
+            icon.innerHTML = type === 'success' ? '<i class="bi bi-check-circle-fill"></i>' : '<i class="bi bi-exclamation-triangle-fill"></i>';
+            
+            if (type === 'warning') {
+                buttons.innerHTML = `
+                    <button class="btn btn-confirm" onclick="confirmDeleteAction('${callback}')">Yes</button>
+                    <button class="btn btn-cancel" onclick="hideAlert()">No</button>
+                `;
+            } else {
+                buttons.innerHTML = `<button class="btn" onclick="hideAlert()">OK</button>`;
+            }
+            
+            alertBox.classList.add('show');
+            overlay.classList.add('show');
+        }
+
+        function hideAlert() {
+            const alertBox = document.getElementById('customAlert');
+            const overlay = document.getElementById('overlay');
+            alertBox.classList.remove('show');
+            overlay.classList.remove('show');
+        }
+
+        function showConfirmDelete(url, event) {
+            event.preventDefault();
+            showAlert('Are you sure you want to delete this schedule?', 'warning', url);
+        }
+
+        function confirmDeleteAction(url) {
+            fetch(url, { method: 'GET' })
+                .then(response => {
+                    if (response.ok) {
+                        showAlert('Schedule deleted successfully!', 'success');
+                        setTimeout(() => {
+                            hideAlert();
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        showAlert('Failed to delete schedule.', 'warning');
+                    }
+                })
+                .catch(() => showAlert('An error occurred.', 'warning'));
+            hideAlert();
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const toggler = document.querySelector('.navbar-toggler');
             const sidebar = document.querySelector('#sidebarMenu');
@@ -399,73 +418,7 @@
                 e.preventDefault();
                 sidebar.classList.toggle('show');
             });
-
-            // Custom Alert Functions
-            window.hideAlert = function() {
-                const alertBox = document.getElementById('customAlert');
-                const overlay = document.getElementById('overlay');
-                alertBox.classList.remove('show');
-                overlay.classList.remove('show');
-            };
-
-            function showAlert(message, type, callback) {
-                const alertBox = document.getElementById('customAlert');
-                const overlay = document.getElementById('overlay');
-                const icon = alertBox.querySelector('.icon');
-                const msg = alertBox.querySelector('.message');
-                const buttons = alertBox.querySelector('.buttons');
-                
-                msg.textContent = message;
-                alertBox.className = `custom-alert ${type}`;
-                icon.innerHTML = type === 'success' ? '<i class="bi bi-check-circle-fill"></i>' : '<i class="bi bi-exclamation-triangle-fill"></i>';
-                
-                if (type === 'warning') {
-                    buttons.innerHTML = `
-                        <button class="btn btn-confirm" onclick="confirmDeleteAction('${callback}')">Yes</button>
-                        <button class="btn btn-cancel" onclick="hideAlert()">No</button>
-                    `;
-                } else {
-                    buttons.innerHTML = `<button class="btn" onclick="hideAlert()">OK</button>`;
-                }
-                
-                alertBox.classList.add('show');
-                overlay.classList.add('show');
-            }
-
-            window.showConfirmDelete = function(url, event) {
-                event.preventDefault();
-                showAlert('Are you sure you want to delete this employee?', 'warning', url);
-            };
-
-            window.confirmDeleteAction = function(url) {
-                fetch(url, { method: 'GET' })
-                    .then(response => {
-                        if (response.ok) {
-                            showAlert('Employee deleted successfully!', 'success');
-                            setTimeout(() => {
-                                hideAlert();
-                                location.reload();
-                            }, 1500);
-                        } else {
-                            showAlert('Failed to delete employee.', 'warning');
-                        }
-                    })
-                    .catch(() => showAlert('An error occurred.', 'warning'));
-            };
-
-            // Kiểm tra URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('saveSuccess')) {
-                showAlert('Success! Employee saved successfully.', 'success');
-            }
-            if (urlParams.has('deleteSuccess')) {
-                showAlert('Success! Employee deleted successfully.', 'success');
-            }
-            if (urlParams.has('error')) {
-                showAlert('Error! An error occurred. Please try again.', 'warning');
-            }
         });
     </script>
 </body>
 </html>
-
