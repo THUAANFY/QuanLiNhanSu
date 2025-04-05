@@ -368,7 +368,7 @@ public class AdminController {
     
     @PostMapping("/salaries/calculate")
     public String calculateSalary(@RequestParam Long employeeId,
-                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate month,
+                                 @RequestParam String month,
                                  HttpSession session) {
         Employee admin = (Employee) session.getAttribute("employee");
         if (admin == null || !admin.isAdmin()) {
@@ -377,7 +377,9 @@ public class AdminController {
         
         Optional<Employee> employee = employeeService.getEmployeeById(employeeId);
         if (employee.isPresent()) {
-            salaryService.calculateSalary(employee.get(), month);
+            // Convert the month string (YYYY-MM) to a LocalDate by adding day 1
+            LocalDate monthDate = LocalDate.parse(month + "-01");
+            salaryService.calculateSalary(employee.get(), monthDate);
         }
         
         return "redirect:/admin/salaries";
@@ -513,3 +515,4 @@ public class AdminController {
         return "admin/statistics";
     }
 }
+
