@@ -1,0 +1,322 @@
+body {
+    font-family: 'Manrope', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #1f2a44;
+    overflow-x: hidden;
+    margin: 0;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 60px 0 0;
+    width: 220px;
+    background: linear-gradient(180deg, #1f2a44, #0f172a);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.sidebar-sticky {
+    height: calc(100vh - 60px);
+    padding-top: 1.5rem;
+}
+.nav-link {
+    color: #b0b7c3;
+    font-weight: 500;
+    padding: 12px 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+.nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+.nav-link.active {
+    color: #fff;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+}
+.nav-link i {
+    margin-right: 12px;
+    font-size: 1rem;
+}
+.navbar {
+    background: #fff;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+    padding: 15px 25px;
+    border-bottom: 1px solid #e5e7eb;
+    position: relative;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+}
+.navbar-brand {
+    font-weight: 700;
+    color: #1f2a44;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    margin-left: 15px;
+}
+.navbar-toggler {
+    display: none;
+    z-index: 102;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.navbar-nav {
+    margin-left: auto;
+    margin-right: 15px;
+}
+main {
+    padding-top: 80px;
+    padding-left: 240px;
+    transition: padding-left 0.3s ease;
+    opacity: 0; /* Bắt đầu ẩn để thêm hiệu ứng fade-in */
+    animation: fadeInMain 0.8s ease-out forwards; /* Hiệu ứng cho toàn bộ main */
+}
+.card {
+    border: none;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transform: translateY(20px); /* Bắt đầu dịch xuống để thêm hiệu ứng slide-up */
+    opacity: 0; /* Bắt đầu ẩn */
+    transition: all 0.4s ease; /* Hiệu ứng hover */
+}
+.card.show {
+    transform: translateY(0); /* Trở về vị trí ban đầu */
+    opacity: 1; /* Hiển thị đầy đủ */
+    animation: slideUp 0.6s ease-out forwards; /* Hiệu ứng slide-up khi xuất hiện */
+}
+.card:hover {
+    transform: translateY(-10px); /* Nhấc lên khi hover */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Shadow mạnh hơn */
+}
+.card-body {
+    padding: 25px;
+}
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #1f2a44;
+    transition: all 0.3s ease;
+}
+.card:hover .card-title {
+    color: #6366f1; /* Đổi màu khi hover */
+}
+.card-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    color: #1f2a44;
+    transition: all 0.3s ease;
+}
+.card:hover .card-text {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #6366f1;
+    transition: all 0.3s ease;
+}
+.card:hover .card-icon {
+    transform: scale(1.1) rotate(5deg); /* Phóng to và xoay nhẹ khi hover */
+}
+.table {
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    opacity: 0; /* Bắt đầu ẩn */
+    transform: translateY(20px);
+}
+.table.show {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideUp 0.6s ease-out forwards 0.2s; /* Trễ 0.2s so với card */
+}
+.table th {
+    font-weight: 600;
+    color: #6366f1;
+}
+.btn-primary {
+    background: linear-gradient(45deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background: linear-gradient(45deg, #4f46e5, #7c3aed);
+    transform: translateY(-3px) scale(1.05); /* Nhấc lên và phóng to */
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
+}
+.btn-success {
+    background: linear-gradient(45deg, #10b981, #059669);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-success:hover {
+    background: linear-gradient(45deg, #059669, #047857);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+}
+.btn-danger {
+    background: linear-gradient(45deg, #ef4444, #dc2626);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-danger:hover {
+    background: linear-gradient(45deg, #dc2626, #b91c1c);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.5);
+}
+.btn-outline-primary {
+    color: #6366f1;
+    border: 2px solid #6366f1;
+    border-radius: 30px;
+    padding: 10px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.btn-outline-primary:hover {
+    background: linear-gradient(45deg, #6366f1, #8b5cf6);
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+.btn-outline-success {
+    color: #10b981;
+    border: 2px solid #10b981;
+    border-radius: 30px;
+    padding: 10px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.btn-outline-success:hover {
+    background: linear-gradient(45deg, #10b981, #059669);
+    border-color: transparent;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+.btn-outline-info {
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+    border-radius: 30px;
+    padding: 10px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.btn-outline-info:hover {
+    background: linear-gradient(45deg, #3b82f6, #2563eb);
+    border-color: transparent;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+.list-group-item {
+    border: none;
+    padding: 12px 20px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    color: #1f2a44;
+    opacity: 0; /* Bắt đầu ẩn */
+    transform: translateX(-20px); /* Dịch sang trái */
+}
+.list-group-item.show {
+    opacity: 1;
+    transform: translateX(0);
+    animation: slideInLeft 0.5s ease-out forwards; /* Hiệu ứng trượt từ trái */
+}
+.list-group-item:hover {
+    background: rgba(99, 102, 241, 0.1); /* Màu nền đậm hơn khi hover */
+    transform: translateX(10px); /* Dịch sang phải khi hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.list-group-item i {
+    margin-right: 10px;
+    color: #6366f1;
+    transition: all 0.3s ease;
+}
+.list-group-item:hover i {
+    transform: scale(1.2) rotate(10deg); /* Phóng to và xoay khi hover */
+}
+.display-4 {
+    font-weight: 700;
+    color: #6366f1;
+    animation: pulse 2s infinite;
+}
+/* Responsive */
+@media (max-width: 767.98px) {
+    .sidebar {
+        width: 220px;
+        transform: translateX(-100%);
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    main {
+        padding-left: 0;
+    }
+    .navbar {
+        justify-content: flex-end;
+    }
+    .navbar-brand {
+        margin-left: 0;
+        margin-right: 15px;
+        order: 2;
+    }
+    .navbar-toggler {
+        display: inline-block;
+        order: 1;
+        margin-left: 15px;
+    }
+    .navbar-nav {
+        order: 3;
+    }
+}
+/* Animations */
+@keyframes fadeInMain {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

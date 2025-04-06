@@ -1,0 +1,362 @@
+body {
+    font-family: 'Manrope', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #1f2a44;
+    overflow-x: hidden;
+    margin: 0;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 60px 0 0;
+    width: 220px;
+    background: linear-gradient(180deg, #1f2a44, #0f172a);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.sidebar-sticky {
+    height: calc(100vh - 60px);
+    padding-top: 1.5rem;
+}
+.nav-link {
+    color: #b0b7c3;
+    font-weight: 500;
+    padding: 12px 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+.nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+.nav-link.active {
+    color: #fff;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+    font-weight: 600;
+}
+/* Fix sidebar icon spacing */
+.nav-link i {
+    margin-right: 12px;
+    font-size: 1rem;
+}
+.navbar {
+    background: #fff;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+    padding: 15px 25px;
+    border-bottom: 1px solid #e5e7eb;
+    position: relative;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+}
+.navbar-brand {
+    font-weight: 700;
+    color: #1f2a44;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    margin-left: 15px;
+}
+.navbar-toggler {
+    display: none;
+    z-index: 102;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.navbar-nav {
+    margin-left: auto;
+    margin-right: 15px;
+}
+main {
+    padding-top: 80px;
+    padding-left: 240px;
+    transition: padding-left 0.3s ease;
+    opacity: 0; /* Bắt đầu ẩn để thêm hiệu ứng fade-in */
+    animation: fadeInMain 0.8s ease-out forwards; /* Hiệu ứng cho toàn bộ main */
+}
+.card {
+    border: none;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transform: translateY(20px); /* Bắt đầu dịch xuống để thêm hiệu ứng slide-up */
+    opacity: 0; /* Bắt đầu ẩn */
+    transition: all 0.4s ease; /* Hiệu ứng hover */
+}
+.card.show {
+    transform: translateY(0); /* Trở về vị trí ban đầu */
+    opacity: 1; /* Hiển thị đầy đủ */
+    animation: slideUp 0.6s ease-out forwards; /* Hiệu ứng slide-up khi xuất hiện */
+}
+.card:hover {
+    transform: translateY(-10px); /* Nhấc lên khi hover */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Shadow mạnh hơn */
+}
+.profile-header {
+    background: linear-gradient(to right, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    padding: 30px;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 1px solid rgba(222, 226, 230, 0.5);
+    transition: all 0.3s ease;
+}
+.profile-body {
+    padding: 30px;
+}
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeInScale 0.6s ease-out 0.3s forwards;
+}
+.profile-picture:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+.table {
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    opacity: 0; /* Bắt đầu ẩn */
+    transform: translateY(20px);
+}
+.table.show {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideUp 0.6s ease-out forwards 0.2s; /* Trễ 0.2s so với card */
+}
+.table th {
+    font-weight: 600;
+    color: #6366f1;
+}
+
+/* Completely redesigned tab navigation */
+.nav-tabs {
+    border-bottom: none;
+    margin-bottom: 25px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+.nav-tabs .nav-link {
+    color: #64748b;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-right: 0;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+    background-color: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #6366f1;
+    background-color: rgba(99, 102, 241, 0.08);
+}
+
+.nav-tabs .nav-link.active {
+    color: #fff;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.nav-tabs .nav-link i {
+    margin-right: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover i {
+    transform: scale(1.2);
+}
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid rgba(222, 226, 230, 0.8);
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    background-color: #f8f9fa;
+}
+.form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+    background-color: #fff;
+    transform: translateY(-2px);
+}
+.input-group-text {
+    border-radius: 12px 0 0 12px;
+    background-color: #f8f9fa;
+    border: 1px solid rgba(222, 226, 230, 0.8);
+    border-right: none;
+    transition: all 0.3s ease;
+}
+.input-group:focus-within .input-group-text {
+    border-color: #6366f1;
+    background-color: #fff;
+}
+.btn-primary {
+    background: linear-gradient(45deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background: linear-gradient(45deg, #4f46e5, #7c3aed);
+    transform: translateY(-3px) scale(1.05); /* Nhấc lên và phóng to */
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
+}
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    color: #fff;
+}
+.badge:hover {
+    transform: scale(1.1);
+}
+.badge.bg-success {
+    background: linear-gradient(45deg, #10b981, #059669) !important;
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.2);
+}
+.tab-pane {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+.tab-pane.show.active {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideUp 0.5s ease-out forwards;
+}
+.list-group-item {
+    border: none;
+    padding: 12px 20px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    color: #1f2a44;
+    opacity: 0; /* Bắt đầu ẩn */
+    transform: translateX(-20px); /* Dịch sang trái */
+}
+.list-group-item.show {
+    opacity: 1;
+    transform: translateX(0);
+    animation: slideInLeft 0.5s ease-out forwards; /* Hiệu ứng trượt từ trái */
+}
+
+/* Bootstrap-style alert for success message */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    animation: fadeInAlert 0.5s ease-out forwards;
+}
+
+.alert-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+}
+
+.alert-dismissible {
+    padding-right: 40px;
+}
+
+.alert-dismissible .btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+}
+
+@keyframes fadeInAlert {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .sidebar {
+        width: 220px;
+        transform: translateX(-100%);
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    main {
+        padding-left: 0;
+    }
+    .navbar {
+        justify-content: flex-end;
+    }
+    .navbar-brand {
+        margin-left: 0;
+        margin-right: 15px;
+        order: 2;
+    }
+    .navbar-toggler {
+        display: inline-block;
+        order: 1;
+        margin-left: 15px;
+    }
+    .navbar-nav {
+        order: 3;
+    }
+    .profile-header {
+        text-align: center;
+    }
+    .profile-picture {
+        margin-bottom: 20px;
+    }
+    .nav-tabs {
+        flex-wrap: wrap;
+    }
+    .nav-tabs .nav-link {
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+}
+/* Animations */
+@keyframes fadeInMain {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
